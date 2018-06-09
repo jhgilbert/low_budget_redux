@@ -1,16 +1,14 @@
 // LIBRARY CODE
 
-function createStore() {
-  let state = "I'm the state!";
+function createStore(reducer) {
+  let state;
 
   const getState = () => state;
 
   const handleStateChange = () => {
+    console.log("Library: running HandleStateChange with listeners");
+    console.log(listeners);
     listeners.map(listener => listener());
-  };
-
-  const testStateChangeForNow = () => {
-    handleStateChange();
   };
 
   let listeners = [];
@@ -26,16 +24,28 @@ function createStore() {
     return unsubscribe;
   };
 
+  const dispatch = action => {
+    console.log("Library: Dispatch is running with action");
+    console.log(action);
+    state = reducer(state, action);
+    handleStateChange();
+  };
+
   return {
     getState,
     subscribe,
-    testStateChangeForNow
+    dispatch
   };
 }
 
 // APPLICATION CODE
 
-const store = createStore();
+const reducer = (state = [], action) => {
+  console.log("App: Reducer is running");
+  return state;
+};
+
+const store = createStore(reducer);
 
 console.log("App: The initial state is");
 console.log(store.getState());
@@ -48,9 +58,16 @@ console.log("App: Attempting subscription.");
 const unsubscribe = store.subscribe(listener);
 
 console.log("Testing state change.");
-store.testStateChangeForNow();
+store.dispatch({
+  type: "SILLY_TEST_ACTION"
+});
+
+console.log("App: The state is now");
+console.log(store.getState());
 
 unsubscribe();
 
 console.log("Testing state change after unsubscribe.");
-store.testStateChangeForNow();
+store.dispatch({
+  type: "SILLY_TEST_ACTION_TWO"
+});
