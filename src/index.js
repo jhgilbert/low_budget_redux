@@ -13,11 +13,15 @@ function createStore () {
     handleStateChange()
   }
 
-  const listeners = []
+  let listeners = []
 
-  const subscribe = (listener) => {
+  const subscribe = (newListener) => {
+    const unsubscribe = () => {
+      listeners = listeners.filter((listener) => { listener !== newListener})
+    }
     console.log("Library: Adding listener.")
     listeners.push(listener)
+    return unsubscribe
   }
 
   return {
@@ -42,4 +46,9 @@ console.log("App: Attempting subscription.")
 const unsubscribe = store.subscribe(listener)
 
 console.log("Testing state change.")
+store.testStateChangeForNow()
+
+unsubscribe()
+
+console.log("Testing state change after unsubscribe.")
 store.testStateChangeForNow()
