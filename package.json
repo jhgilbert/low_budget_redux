@@ -1,0 +1,17 @@
+{
+  "name": "budget_redux",
+  "version": "1.0.0",
+  "description": "A low-budget Redux. Just for learning purposes.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "js": "babel ./src/index.js --watch --out-file ./public/index.js"
+  },
+  "author": "Jen Gilbert",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-es2018": "^1.0.0"
+  }
+}
