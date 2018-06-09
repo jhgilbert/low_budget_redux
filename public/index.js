@@ -1,3 +1,12 @@
-let test = "Hello world";
+function createStore() {
+  let state = "I'm the state!";
 
-console.log(test);
+  const getState = () => state;
+
+  return {
+    getState
+  };
+}
+
+const store = createStore();
+console.log(store.getState());
